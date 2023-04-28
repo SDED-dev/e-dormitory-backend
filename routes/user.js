@@ -32,4 +32,6 @@ r.post(
   require($ + "/controllers/user/edit")
 );
 
+r.post("/list", auth(["admin"]), require($ + "/controllers/user/list"));
+
 module.exports = r;
