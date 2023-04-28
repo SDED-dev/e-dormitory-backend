@@ -30,7 +30,8 @@ r.post(
   body("faculty_id").isInt().withMessage("Факультет не вказано"),
   body("course").not().isEmpty().withMessage("Курс не вказано"),
   body("group").not().isEmpty().withMessage("Група не вказано"),
-  body("hostel").not().isEmpty().withMessage("Гуртожиток не вказано"),
+  body("dormitory_id").isInt().withMessage("dormitory_id не вказано"),
+  body("room_id").isInt().withMessage("room_id не вказано"),
   body("passport").not().isEmpty().withMessage("Паспорт не вказано"),
   body("rnocpp").not().isEmpty().withMessage("РНОКПП не вказано"),
   require($ + "/controllers/order/create")

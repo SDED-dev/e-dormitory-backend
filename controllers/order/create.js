@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
     const date = moment().tz("Europe/Kiev").format("YYYY-MM-DD HH:mm:ss");
 
     const orders_id = await db(
-      "INSERT INTO orders (user_id, first_name, last_name, sur_name, faculty_id, course, `group`, hostel, passport, rnocpp, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?); SELECT id FROM orders WHERE user_id = ?;",
+      "INSERT INTO orders (user_id, first_name, last_name, sur_name, faculty_id, course, `group`, dormitory_id, room_id, passport, rnocpp, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?); SELECT id FROM orders WHERE user_id = ?;",
       [
         user.id,
         b.first_name,
@@ -33,7 +33,8 @@ module.exports = async (req, res) => {
         b.faculty_id,
         b.course,
         b.group,
-        b.hostel,
+        b.dormitory_id,
+        b.room_id,
         b.passport,
         b.rnocpp,
         date,
