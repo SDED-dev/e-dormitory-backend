@@ -3,6 +3,7 @@ const db = require($ + "/db.js");
 const jwt = require("jsonwebtoken");
 const moment = require("moment-timezone");
 const move = require($ + "/modules/files/move");
+const canCreate = require($ + "/modules/order/canCreate");
 
 module.exports = async (req, res) => {
   const errors = validationResult(req);
@@ -14,6 +15,11 @@ module.exports = async (req, res) => {
     const b = req.body;
     const token = req.headers.authorization;
     const { user } = jwt.decode(token, process.env.JWT_SECRET);
+
+    if (!(await canCreate(user.id)))
+      return res.status(401).json({
+        errors: [{ msg: "Дозволено мати лише одну активну заявку!" }],
+      });
 
     const date = moment().tz("Europe/Kiev").format("YYYY-MM-DD HH:mm:ss");
 
