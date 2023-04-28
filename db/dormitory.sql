@@ -2,8 +2,9 @@ CREATE TABLE
     `dormitory` (
         `id` int NOT NULL AUTO_INCREMENT,
         `number` varchar(32) DEFAULT NULL UNIQUE,
+        `moderator_id` int DEFAULT NULL,
         `director` varchar(64) DEFAULT NULL,
-        PRIMARY KEY (`id`)
+        FOREIGN KEY (`moderator_id`) REFERENCES `users` (`id`) PRIMARY KEY (`id`)
     );
 
 CREATE TABLE
