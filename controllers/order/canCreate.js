@@ -7,8 +7,6 @@ module.exports = async (req, res) => {
     const token = req.headers.authorization;
     const { user } = jwt.decode(token, process.env.JWT_SECRET);
 
-    console.log(await canCreate(user.id));
-
     res.status(200).json(await canCreate(user.id));
   } catch (err) {
     console.log(err);
