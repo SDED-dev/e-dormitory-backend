@@ -17,14 +17,16 @@ module.exports = async (req, res) => {
     console.log(user);
 
     if (user.roles.includes("admin") || user.roles.includes("moderator"))
-      return res.sendfile(`${$}/uploads/orders/${order}/${file}`);
+      return res.sendfile(process.env.STATIC_PATH + `/orders/${order}/${file}`);
 
     if (user.roles.includes("user")) {
       const check = await db(`SELECT user_id FROM orders WHERE id = ?`, [
         order,
       ]);
       if (check[0].user_id === user.id)
-        return res.sendfile(`${$}/uploads/orders/${order}/${file}`);
+        return res.sendfile(
+          process.env.STATIC_PATH + +`/orders/${order}/${file}`
+        );
     }
     res.status(401).json({ errors: [{ msg: "У доступі відмовлено" }] });
   } catch (err) {
