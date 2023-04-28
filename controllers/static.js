@@ -14,8 +14,6 @@ module.exports = async (req, res) => {
     const { user } = jwt.decode(token, process.env.JWT_SECRET);
     const { order, file } = req.query;
 
-    console.log(user);
-
     if (user.roles.includes("admin") || user.roles.includes("moderator"))
       return res.sendfile(process.env.STATIC_PATH + `/orders/${order}/${file}`);
 
@@ -25,7 +23,7 @@ module.exports = async (req, res) => {
       ]);
       if (check[0].user_id === user.id)
         return res.sendfile(
-          process.env.STATIC_PATH + +`/orders/${order}/${file}`
+          process.env.STATIC_PATH + `/orders/${order}/${file}`
         );
     }
     res.status(401).json({ errors: [{ msg: "У доступі відмовлено" }] });
