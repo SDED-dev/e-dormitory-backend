@@ -1,5 +1,6 @@
 const r = require("express").Router();
 const { body } = require("express-validator");
+const auth = require($ + "/middleware/auth.js");
 
 r.post(
   "/register",
@@ -20,6 +21,15 @@ r.post(
     .isLength({ min: 6 })
     .withMessage("Пароль має мати не менше 6 символів"),
   require("../controllers/user/login")
+);
+
+r.post(
+  "/edit",
+  auth(["admin", "user"]),
+  body("id").isInt().withMessage("ID не є коректним"),
+  body("email").isEmail().withMessage("Пошта не є коректною"),
+  body("phone").isInt().withMessage("Телефон не є корректним"),
+  require($ + "/controllers/user/edit")
 );
 
 module.exports = r;
