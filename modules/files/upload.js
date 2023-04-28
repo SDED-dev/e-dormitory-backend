@@ -4,7 +4,7 @@ const randomstring = require("randomstring");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/temp/");
+    cb(null, process.env.STATIC_PATH + "/temp/");
   },
   filename: (req, file, cb) => {
     const filename =

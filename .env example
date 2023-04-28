@@ -6,3 +6,5 @@ DB_NAME=
 JWT_SECRET=
 
 CORS="ip, ip, ip"
+
+STATIC_PATH=

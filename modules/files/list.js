@@ -4,7 +4,9 @@ module.exports = (order) => {
   try {
     return new Promise(async (resolve, reject) => {
       try {
-        const files = await fs.promises.readdir(`${$}/uploads/orders/${order}`);
+        const files = await fs.promises.readdir(
+          process.env.STATIC_PATH + `/orders/${order}`
+        );
         resolve(files);
       } catch (error) {
         resolve([]);

@@ -10,7 +10,7 @@ module.exports = async (res, order, files) => {
         const file = files[key][j];
 
         const source = file.path;
-        const newPath = `${$}/uploads/orders/${order}`;
+        const newPath = process.env.STATIC_PATH + `/orders/${order}`;
         const target = `${newPath}/${key}_${j}${path.extname(
           file.originalname
         )}`;
