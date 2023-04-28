@@ -10,7 +10,14 @@ global.$ = __dirname;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(cors({ origin: "*" }));
+const origin = process.env.CORS?.split(",");
+
+app.use(
+  cors({
+    credentials: true,
+    origin,
+  })
+);
 
 app.use("/v0", require("./router.js"));
 
