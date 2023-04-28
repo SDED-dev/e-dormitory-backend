@@ -4,6 +4,12 @@ module.exports = (roles) => {
   return (req, res, next) => {
     if (req.method === "OPTIONS") next();
     try {
+      if (req.headers.authorization.includes("Bearer "))
+        req.headers.authorization = req.headers.authorization.replace(
+          "Bearer ",
+          ""
+        );
+
       const token = req.headers.authorization;
       if (!token) return res.status(401).json({ message: "Token required" });
       jwt.verify(token, process.env.JWT_SECRET);
