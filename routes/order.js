@@ -37,9 +37,9 @@ r.post(
   require($ + "/controllers/order/create")
 );
 
-r.post("/revoke", auth(["user"]), require($ + "/controllers/order/revoke"));
+r.patch("/revoke", auth(["user"]), require($ + "/controllers/order/revoke"));
 
-r.post(
+r.patch(
   "/editStatus",
   auth(["admin", "moderator"]),
   body("order").isInt().withMessage("Заяву не вказано"),
@@ -47,7 +47,7 @@ r.post(
   require($ + "/controllers/order/editStatus")
 );
 
-r.post(
+r.get(
   "/list",
   auth(["admin", "moderator", "user"]),
   body("page").isInt().withMessage("Сторінку не вказано"),
@@ -55,7 +55,7 @@ r.post(
   require($ + "/controllers/order/list")
 );
 
-r.post(
+r.get(
   "/canCreate",
   auth(["user"]),
   require($ + "/controllers/order/canCreate.js")

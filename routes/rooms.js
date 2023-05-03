@@ -2,6 +2,12 @@ const r = require("express").Router();
 const { body } = require("express-validator");
 const auth = require($ + "/middleware/auth.js");
 
+r.get(
+  "/",
+  auth(["admin", "dean", "commandant", "user"]),
+  require($ + "/controllers/rooms/list")
+);
+
 r.post(
   "/create",
   auth(["moderator"]),
@@ -16,7 +22,7 @@ r.post(
   require($ + "/controllers/rooms/create")
 );
 
-r.post(
+r.patch(
   "/edit",
   auth(["moderator"]),
   body("id").isInt().withMessage("ID не вказано"),

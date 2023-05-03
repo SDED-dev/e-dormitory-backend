@@ -2,6 +2,8 @@ const r = require("express").Router();
 const { body } = require("express-validator");
 const auth = require($ + "/middleware/auth.js");
 
+r.get("/list", auth(["admin"]), require($ + "/controllers/user/list"));
+
 r.post(
   "/register",
   body("email").isEmail().withMessage("Пошта не є коректною"),
@@ -23,7 +25,7 @@ r.post(
   require("../controllers/user/login")
 );
 
-r.post(
+r.patch(
   "/edit",
   auth(["admin", "user"]),
   body("id").isInt().withMessage("ID не є коректним"),
@@ -31,7 +33,5 @@ r.post(
   body("phone").isInt().withMessage("Телефон не є корректним"),
   require($ + "/controllers/user/edit")
 );
-
-r.post("/list", auth(["admin"]), require($ + "/controllers/user/list"));
 
 module.exports = r;

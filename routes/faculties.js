@@ -2,6 +2,12 @@ const r = require("express").Router();
 const { body } = require("express-validator");
 const auth = require($ + "/middleware/auth.js");
 
+r.get(
+  "/",
+  auth(["admin", "dean", "commandant", "user"]),
+  require($ + "/controllers/faculties/list")
+);
+
 r.post(
   "/create",
   auth(["admin"]),
@@ -9,7 +15,7 @@ r.post(
   require($ + "/controllers/faculties/create")
 );
 
-r.post(
+r.patch(
   "/edit",
   auth(["admin"]),
   body("id").not().isEmpty().withMessage("ID не вказано"),

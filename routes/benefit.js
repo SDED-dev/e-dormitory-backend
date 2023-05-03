@@ -2,6 +2,12 @@ const r = require("express").Router();
 const { body } = require("express-validator");
 const auth = require($ + "/middleware/auth.js");
 
+r.get(
+  "/",
+  auth(["admin", "dean", "commandant", "user"]),
+  require($ + "/controllers/benefit/list")
+);
+
 r.post(
   "/create",
   auth(["admin"]),
@@ -10,7 +16,7 @@ r.post(
   require($ + "/controllers/benefit/create")
 );
 
-r.put(
+r.patch(
   "/edit",
   auth(["admin"]),
   body("id").not().isEmpty().withMessage("ID не вказано"),
@@ -19,7 +25,7 @@ r.put(
   require($ + "/controllers/benefit/edit")
 );
 
-r.post(
+r.patch(
   "/changeStatus",
   auth(["admin"]),
   body("id").not().isEmpty().withMessage("ID не вказано"),

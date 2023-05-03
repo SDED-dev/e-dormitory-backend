@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
     const filter = req.body.filter;
     const value = req.body.value;
 
-    var sql = `SELECT rooms.id, rooms.number, capacity, capacity_available, faculties.name AS faculties_name, dormitory.number AS dormitory_number FROM rooms INNER JOIN faculties ON faculties.id = faculties_id INNER JOIN dormitory ON dormitory.id = dormitory_id`;
+    var sql = `SELECT rooms.id, rooms.number, capacity, capacity_available, faculties.name AS faculties_name, dormitories.number AS dormitory_number FROM rooms INNER JOIN faculties ON faculties.id = faculties_id INNER JOIN dormitories ON dormitories.id = dormitory_id`;
 
     if (filter && value) sql += ` WHERE ${filter} = ${value}`;
     const data = await db(sql);
