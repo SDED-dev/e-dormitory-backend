@@ -109,9 +109,11 @@ CREATE TABLE
     `check_time` (
         `id` int NOT NULL AUTO_INCREMENT,
         `course_id` int NOT NULL,
+        `faculty_id` int NOT NULL,
         `in` DATE NOT NULL,
         `out` DATE NOT NULL,
         FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON UPDATE CASCADE,
+        FOREIGN KEY (`faculty_id`) REFERENCES `faculties` (`id`) ON UPDATE CASCADE,
         PRIMARY KEY (`id`)
     );
 
