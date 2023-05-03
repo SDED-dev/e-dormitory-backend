@@ -22,4 +22,10 @@ r.post(
   require($ + "/controllers/list/rooms")
 );
 
+r.post(
+  "/benefit",
+  auth(["admin", "moderator", "user"]),
+  require($ + "/controllers/list/benefit")
+);
+
 module.exports = r;
