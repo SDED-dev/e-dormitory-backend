@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     const number = req.body.number;
     const moderator_id = req.body.moderator_id || null;
 
-    await db(`INSERT INTO dormitory (number, moderator_id) VALUES (?, ?)`, [
+    await db(`INSERT INTO dormitories (number, moderator_id) VALUES (?, ?)`, [
       number,
       moderator_id,
     ]);

@@ -9,11 +9,10 @@ module.exports = async (req, res) => {
   try {
     const { id, number, moderator_id } = req.body;
 
-    await db(`UPDATE dormitory SET number = ?, moderator_id = ? WHERE id = ?`, [
-      number,
-      moderator_id,
-      id,
-    ]);
+    await db(
+      `UPDATE dormitories SET number = ?, moderator_id = ? WHERE id = ?`,
+      [number, moderator_id, id]
+    );
 
     res.status(200).json({ message: "Запис змінено" });
   } catch (err) {
