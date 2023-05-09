@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
     const { filter } = req.query;
 
     var query =
-      "SELECT users.id, email, phone FROM users INNER JOIN user_roles ON users.id = user_roles.user_id";
+      "SELECT users.id, email, phone, name as role_name FROM users LEFT JOIN user_roles ON users.id = user_roles.user_id LEFT JOIN roles ON roles.id = user_roles.role_id";
 
     if (!filter) query += " WHERE role_id = 2 OR role_id = 3";
     if (filter == "faculty_admin") query += " WHERE role_id = 2";
