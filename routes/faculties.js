@@ -23,4 +23,11 @@ r.patch(
   require($ + "/controllers/faculties/edit")
 );
 
+r.patch(
+  "/changeStatus",
+  auth(["admin"]),
+  body("id").not().isEmpty().withMessage("ID не вказано"),
+  require($ + "/controllers/faculties/changeStatus")
+);
+
 module.exports = r;
