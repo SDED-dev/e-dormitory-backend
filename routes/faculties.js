@@ -30,4 +30,11 @@ r.patch(
   require($ + "/controllers/faculties/changeStatus")
 );
 
+r.delete(
+  "/",
+  auth(["admin"]),
+  body("id").not().isEmpty().withMessage("ID не вказано"),
+  require($ + "/controllers/faculties/delete")
+);
+
 module.exports = r;

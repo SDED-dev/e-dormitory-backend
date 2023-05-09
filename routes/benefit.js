@@ -32,4 +32,11 @@ r.patch(
   require($ + "/controllers/benefit/changeStatus")
 );
 
+r.delete(
+  "/",
+  auth(["admin"]),
+  body("id").not().isEmpty().withMessage("ID не вказано"),
+  require($ + "/controllers/benefit/delete")
+);
+
 module.exports = r;

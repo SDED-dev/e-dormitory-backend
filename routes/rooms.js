@@ -37,4 +37,11 @@ r.patch(
   require($ + "/controllers/rooms/edit")
 );
 
+r.delete(
+  "/",
+  auth(["moderator"]),
+  body("id").isInt().withMessage("ID не вказано"),
+  require($ + "/controllers/rooms/delete")
+);
+
 module.exports = r;

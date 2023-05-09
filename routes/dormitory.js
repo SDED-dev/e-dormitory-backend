@@ -25,4 +25,11 @@ r.patch(
   require($ + "/controllers/dormitory/edit")
 );
 
+r.delete(
+  "/",
+  auth(["admin"]),
+  body("id").not().isEmpty().withMessage("ID не вказано"),
+  require($ + "/controllers/dormitory/delete")
+);
+
 module.exports = r;
