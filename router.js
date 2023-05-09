@@ -8,5 +8,6 @@ r.use("/rooms", require("./routes/rooms.js"));
 r.use("/benefit", require("./routes/benefit.js"));
 r.use("/static", require("./routes/static.js"));
 r.use("/checkTime", require("./routes/checkTime.js"));
+r.use("/course", require("./routes/course.js"));
 
 module.exports = r;
