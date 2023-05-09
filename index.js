@@ -9,6 +9,16 @@ const morgan = require("morgan");
 
 global.$ = __dirname;
 
+app.set("trust proxy", "loopback,uniquelocal");
+
+morgan.token("remote-addr", (req) => {
+  return (
+    req.headers["x-forwarded-for"] ||
+    req.headers["x-real-ip"] ||
+    req.connection.remoteAddress
+  );
+});
+
 app.use(
   morgan(
     ":remote-addr :method :url :status :res[content-length] - :response-time ms"
