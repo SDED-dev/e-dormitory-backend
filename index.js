@@ -5,8 +5,15 @@ require("dotenv").config();
 const port = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
 const fs = require("fs");
+const morgan = require("morgan");
 
 global.$ = __dirname;
+
+app.use(
+  morgan(
+    ":remote-addr :method :url :status :res[content-length] - :response-time ms"
+  )
+);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,5 +33,5 @@ fs.promises.mkdir(process.env.STATIC_PATH + "/temp/", { recursive: true });
 fs.promises.mkdir(process.env.STATIC_PATH + "/orders/", { recursive: true });
 
 app.listen(port, () => {
-  console.log(`App listening on http://localhost:${port}`);
+  console.log(`e-dormitory listening on http://localhost:${port}`);
 });
