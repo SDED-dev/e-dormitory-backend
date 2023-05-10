@@ -1,5 +1,5 @@
 const r = require("express").Router();
-const { body } = require("express-validator");
+const { body, query } = require("express-validator");
 const auth = require($ + "/middleware/auth.js");
 
 r.get(
@@ -40,7 +40,7 @@ r.patch(
 r.delete(
   "/",
   auth(["moderator"]),
-  body("id").isInt().withMessage("ID не вказано"),
+  query("id").isInt().withMessage("ID не вказано"),
   require($ + "/controllers/rooms/delete")
 );
 

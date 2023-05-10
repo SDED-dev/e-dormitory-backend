@@ -1,5 +1,5 @@
 const r = require("express").Router();
-const { body } = require("express-validator");
+const { body, query } = require("express-validator");
 const auth = require($ + "/middleware/auth.js");
 
 r.get(
@@ -28,7 +28,7 @@ r.patch(
 r.delete(
   "/",
   auth(["admin"]),
-  body("id").not().isEmpty().withMessage("ID не вказано"),
+  query("id").not().isEmpty().withMessage("ID не вказано"),
   require($ + "/controllers/dormitory/delete")
 );
 

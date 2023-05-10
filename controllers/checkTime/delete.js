@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
     return res.status(404).json({ errors: errors.array() });
   }
   try {
-    const { id } = req.body;
+    const { id } = req.query;
 
     const { affectedRows } = await db(`DELETE FROM check_time  WHERE id = ?`, [
       id,
