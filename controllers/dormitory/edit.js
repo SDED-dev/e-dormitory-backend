@@ -17,12 +17,11 @@ module.exports = async (req, res) => {
     if (faculties) {
       await db(`DELETE FROM faculties_dormitory WHERE dormitory_id = ?`, [id]);
       for (let i = 0; i < faculties.length; i++) {
-        faculties[i] = [id, faculties[i]];
+        await db(
+          `INSERT INTO faculties_dormitory( dormitory_id, faculties_id) VALUES (?, (SELECT id FROM faculties WHERE name = ? LIMIT 1))`,
+          [id, faculties[i]]
+        );
       }
-      await db(
-        `INSERT INTO faculties_dormitory( dormitory_id, faculties_id) VALUES ?`,
-        [faculties]
-      );
     }
     res.status(200).json({ message: "Запис змінено" });
   } catch (err) {
