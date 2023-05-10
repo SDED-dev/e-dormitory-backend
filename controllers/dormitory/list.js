@@ -3,7 +3,7 @@ const db = require($ + "/db.js");
 module.exports = async (req, res) => {
   try {
     const data = await db(
-      "SELECT dormitories.id, number, moderator_id, email  FROM dormitories LEFT JOIN users ON dormitories.moderator_id = users.id"
+      "SELECT dormitories.id, number, commandant_id, email  FROM dormitories LEFT JOIN users ON dormitories.commandant_id = users.id"
     );
     res.status(200).json(data);
   } catch (err) {
