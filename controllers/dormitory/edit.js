@@ -7,13 +7,23 @@ module.exports = async (req, res) => {
     return res.status(404).json({ errors: errors.array() });
   }
   try {
-    const { id, number, moderator_id } = req.body;
+    const { id, number, moderator_id, faculties } = req.body;
 
     await db(
-      `UPDATE dormitories SET number = ?, moderator_id = ? WHERE id = ?`,
+      `UPDATE dormitories SET number = ?, commandant_id = ? WHERE id = ?`,
       [number, moderator_id, id]
     );
 
+    if (faculties) {
+      await db(`DELETE FROM faculties_dormitory WHERE dormitory_id = ?`, [id]);
+      for (let i = 0; i < faculties.length; i++) {
+        faculties[i] = [id, faculties[i]];
+      }
+      await db(
+        `INSERT INTO faculties_dormitory( dormitory_id, faculties_id) VALUES ?`,
+        [faculties]
+      );
+    }
     res.status(200).json({ message: "Запис змінено" });
   } catch (err) {
     console.log(err);
