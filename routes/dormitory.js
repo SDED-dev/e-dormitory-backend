@@ -20,7 +20,7 @@ r.patch(
   auth(["admin"]),
   body("id").not().isEmpty().withMessage("ID не вказано"),
   body("number").not().isEmpty().withMessage("Наіменування не вказано"),
-  body("moderator_id").not().isEmpty().withMessage("ID модератора не вказано"),
+  body("commandant_id").not().isEmpty().withMessage("ID коменданта не вказано"),
 
   require($ + "/controllers/dormitory/edit")
 );
