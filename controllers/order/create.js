@@ -13,8 +13,7 @@ module.exports = async (req, res) => {
 
   try {
     const b = req.body;
-    const token = req.headers.authorization;
-    const { user } = jwt.decode(token, process.env.JWT_SECRET);
+    const user = req.user;
 
     if (!(await canCreate(user.id)))
       return res.status(401).json({
@@ -24,20 +23,24 @@ module.exports = async (req, res) => {
     const date = moment().tz("Europe/Kiev").format("YYYY-MM-DD HH:mm:ss");
 
     const orders_id = await db(
-      "INSERT INTO orders (user_id, first_name, last_name, sur_name, faculty_id, course, `group`, dormitory_id, room_id, passport, rnocpp, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?); SELECT id FROM orders WHERE user_id = ?;",
+      "INSERT INTO orders (user_id, first_name, last_name, sur_name, gender, faculty_id, course_id, `group`, dormitory_id, room_id, passport, RNTRC, status, created_at, check_in, check_out) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?); SELECT id FROM orders WHERE user_id = ?;",
       [
         user.id,
         b.first_name,
         b.last_name,
         b.sur_name,
+        b.gender,
         b.faculty_id,
-        b.course,
+        b.course_id,
         b.group,
         b.dormitory_id,
         b.room_id,
         b.passport,
-        b.rnocpp,
+        b.rntrc,
         date,
+        b.check_in,
+        b.check_out,
         user.id,
       ]
     );

@@ -8,6 +8,10 @@ r.post(
   auth(["user"]),
   upload.fields([
     {
+      name: "benefit",
+      maxCount: 1,
+    },
+    {
       name: "passport",
       maxCount: 4,
     },
@@ -27,13 +31,16 @@ r.post(
   body("first_name").not().isEmpty().withMessage("Імя не вказано"),
   body("last_name").not().isEmpty().withMessage("Прізвище не вказано"),
   body("sur_name").not().isEmpty().withMessage("По-батькові не вказано"),
+  body("gender").not().isEmpty().withMessage("Стать не вказано"),
   body("faculty_id").isInt().withMessage("Факультет не вказано"),
-  body("course").not().isEmpty().withMessage("Курс не вказано"),
+  body("course_id").not().isEmpty().withMessage("Курс не вказано"),
   body("group").not().isEmpty().withMessage("Група не вказано"),
   body("dormitory_id").isInt().withMessage("dormitory_id не вказано"),
   body("room_id").isInt().withMessage("room_id не вказано"),
   body("passport").not().isEmpty().withMessage("Паспорт не вказано"),
-  body("rnocpp").not().isEmpty().withMessage("РНОКПП не вказано"),
+  body("rntrc").not().isEmpty().withMessage("РНОКПП не вказано"),
+  body("check_in").not().isEmpty().withMessage("Дата заселення не вказано"),
+  body("check_out").not().isEmpty().withMessage("Дата виселення не вказано"),
   require($ + "/controllers/order/create")
 );
 
