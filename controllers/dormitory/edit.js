@@ -7,11 +7,11 @@ module.exports = async (req, res) => {
     return res.status(404).json({ errors: errors.array() });
   }
   try {
-    const { id, number, moderator_id, faculties } = req.body;
+    const { id, number, commandant_id, faculties } = req.body;
 
     await db(
       `UPDATE dormitories SET number = ?, commandant_id = ? WHERE id = ?`,
-      [number, moderator_id, id]
+      [number, commandant_id, id]
     );
 
     if (faculties) {
