@@ -8,12 +8,8 @@ module.exports = async (req, res) => {
   }
   try {
     const number = req.body.number;
-    const moderator_id = req.body.moderator_id || null;
 
-    await db(`INSERT INTO dormitories (number, moderator_id) VALUES (?, ?)`, [
-      number,
-      moderator_id,
-    ]);
+    await db(`INSERT INTO dormitories (number) VALUES (?)`, [number]);
 
     res.status(200).json({ message: "Запис додано" });
   } catch (err) {
