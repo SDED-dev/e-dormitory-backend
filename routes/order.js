@@ -68,4 +68,10 @@ r.get(
 
 r.use("/comment", require("./comment.js"));
 
+r.get(
+  "/:orderId",
+  auth(["admin", "dean", "commandant", "user"]),
+  require($ + "/controllers/order/get")
+);
+
 module.exports = r;
