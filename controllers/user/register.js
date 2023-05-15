@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
 
   try {
     const body = req.body;
-    const hashPassw = await bcrypt.hashSync(body.password, 15);
+    const hashPassw = await bcrypt.hashSync(body.password, 5);
     var role = "user";
 
     if (body.role && auth(req, ["moderator", "admin"])) {
