@@ -7,9 +7,13 @@ module.exports = async (req, res) => {
     return res.status(404).json({ errors: errors.array() });
   }
   try {
-    const { id, name } = req.body;
+    const { id, name, dean_id } = req.body;
 
-    await db(`UPDATE faculties SET name = ? WHERE id = ?`, [name, id]);
+    await db(`UPDATE faculties SET name = ?, dean_id = ? WHERE id = ?`, [
+      name,
+      dean_id,
+      id,
+    ]);
 
     res.status(200).json({ message: "Запис змінено" });
   } catch (err) {

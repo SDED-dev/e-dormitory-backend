@@ -7,11 +7,21 @@ module.exports = async (req, res) => {
     return res.status(404).json({ errors: errors.array() });
   }
   try {
-    const { faculties_id, dormitory_id, number, capacity, capacity_available } =
-      req.body;
+    const { faculties_id, number, capacity } = req.body;
+
+    const dormitory = await db(
+      "SELECT id FROM dormitories WHERE commandant_id = ?",
+      [req.user.id]
+    );
+
+    if (dormitory.length == 0)
+      return res
+        .status(404)
+        .json({ errors: [{ msg: "Ви не є комендантом гуртожитку" }] });
+
     await db(
-      `INSERT INTO rooms (faculties_id, dormitory_id, number, capacity, capacity_available) VALUES (?, ?, ?, ?, ?)`,
-      [faculties_id, dormitory_id, number, capacity, capacity_available]
+      `INSERT INTO rooms (faculties_id, dormitory_id, number, capacity) VALUES (?, ?, ?, ?)`,
+      [faculties_id, dormitory[0].id, number, capacity]
     );
 
     res.status(200).json({ message: "Запис додано" });

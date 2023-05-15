@@ -15,16 +15,20 @@ module.exports = async (req, res) => {
     const b = req.body;
     const user = req.user;
 
+    console.log(req);
+
+    /*
     if (!(await canCreate(user.id)))
       return res.status(401).json({
         errors: [{ msg: "Дозволено мати лише одну активну заявку!" }],
       });
 
+      */
     const date = moment().tz("Europe/Kiev").format("YYYY-MM-DD HH:mm:ss");
 
     const orders_id = await db(
-      "INSERT INTO orders (user_id, first_name, last_name, sur_name, gender, faculty_id, course_id, `group`, dormitory_id, room_id, passport, RNTRC, status, created_at, check_in, check_out) " +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?); SELECT id FROM orders WHERE user_id = ?;",
+      "INSERT INTO orders (user_id, first_name, last_name, sur_name, gender, faculty_id, course_id, `group`, dormitory_id, room_id, passport, RNTRC, status, created_at, check_in, check_out, benefit_id) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?); SELECT id FROM orders WHERE user_id = ?;",
       [
         user.id,
         b.first_name,
@@ -41,10 +45,12 @@ module.exports = async (req, res) => {
         date,
         b.check_in,
         b.check_out,
+        b.benefit_id || null,
         user.id,
       ]
     );
 
+    console.log(req.files);
     move(res, orders_id[1][0].id, req.files);
   } catch (err) {
     console.log(err);

@@ -7,17 +7,21 @@ module.exports = async (req, res) => {
     return res.status(404).json({ errors: errors.array() });
   }
   try {
-    const {
-      id,
-      faculties_id,
-      dormitory_id,
-      number,
-      capacity,
-      capacity_available,
-    } = req.body;
+    const { id, faculties_id, number, capacity } = req.body;
+
+    const dormitory = await db(
+      "SELECT id FROM dormitories WHERE commandant_id = ?",
+      [req.user.id]
+    );
+
+    if (dormitory.length == 0)
+      return res
+        .status(404)
+        .json({ errors: [{ msg: "Ви не є комендантом гуртожитку" }] });
+
     await db(
-      `UPDATE rooms SET faculties_id = ?, dormitory_id = ?, number = ?, capacity = ?, capacity_available = ? WHERE id = ?`,
-      [faculties_id, dormitory_id, number, capacity, capacity_available, id]
+      `UPDATE rooms SET faculties_id = ?, dormitory_id = ?, number = ?, capacity = ? WHERE id = ?`,
+      [faculties_id, dormitory[0].id, number, capacity, id]
     );
 
     res.status(200).json({ message: "Запис змінено" });

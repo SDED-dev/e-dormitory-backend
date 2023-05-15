@@ -8,10 +8,6 @@ r.post(
   auth(["user"]),
   upload.fields([
     {
-      name: "benefit",
-      maxCount: 1,
-    },
-    {
       name: "passport",
       maxCount: 4,
     },
@@ -25,6 +21,10 @@ r.post(
     },
     {
       name: "receipt",
+      maxCount: 1,
+    },
+    {
+      name: "benefit",
       maxCount: 1,
     },
   ]),
@@ -56,9 +56,7 @@ r.patch(
 
 r.get(
   "/list",
-  auth(["admin", "moderator", "user"]),
-  body("page").isInt().withMessage("Сторінку не вказано"),
-  body("limit").isInt().withMessage("Ліміт не вказано"),
+  auth(["admin", "dean", "commandant", "user"]),
   require($ + "/controllers/order/list")
 );
 

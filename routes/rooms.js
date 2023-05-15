@@ -10,36 +10,26 @@ r.get(
 
 r.post(
   "/create",
-  auth(["moderator"]),
+  auth(["commandant"]),
   body("faculties_id").isInt().withMessage("Факультет ID не вказано"),
-  body("dormitory_id").isInt().withMessage("Гуртожиток ID не вказано"),
   body("number").not().isEmpty().withMessage("Новер кімнати не вказано"),
   body("capacity").not().isEmpty().withMessage("Місткість кімнати не вказано"),
-  body("capacity_available")
-    .not()
-    .isEmpty()
-    .withMessage("Доступна місткість кімнати не вказано"),
   require($ + "/controllers/rooms/create")
 );
 
 r.patch(
   "/edit",
-  auth(["moderator"]),
+  auth(["commandant"]),
   body("id").isInt().withMessage("ID не вказано"),
-  body("faculties_id").isInt().withMessage("Факультет ID не вказано"),
-  body("dormitory_id").isInt().withMessage("Гуртожиток ID не вказано"),
-  body("number").not().isEmpty().withMessage("Новер кімнати не вказано"),
+  body("faculties_id").isInt().withMessage("Назва факультету не вказано"),
+  body("number").not().isEmpty().withMessage("Номер кімнати не вказано"),
   body("capacity").not().isEmpty().withMessage("Місткість кімнати не вказано"),
-  body("capacity_available")
-    .not()
-    .isEmpty()
-    .withMessage("Доступна місткість кімнати не вказано"),
   require($ + "/controllers/rooms/edit")
 );
 
 r.delete(
   "/",
-  auth(["moderator"]),
+  auth(["commandant"]),
   query("id").isInt().withMessage("ID не вказано"),
   require($ + "/controllers/rooms/delete")
 );

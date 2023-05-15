@@ -20,6 +20,7 @@ r.patch(
   auth(["admin"]),
   body("id").not().isEmpty().withMessage("ID не вказано"),
   body("name").not().isEmpty().withMessage("Наіменування не вказано"),
+  body("dean_id").not().isEmpty().withMessage("ID декана не вказано"),
   require($ + "/controllers/faculties/edit")
 );
 

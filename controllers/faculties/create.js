@@ -8,8 +8,12 @@ module.exports = async (req, res) => {
   }
   try {
     const { name } = req.body;
+    const dean_id = req.body.dean_id || null;
 
-    await db(`INSERT INTO faculties (name) VALUES (?)`, [name]);
+    await db(`INSERT INTO faculties (name, dean_id) VALUES (?)`, [
+      name,
+      dean_id,
+    ]);
 
     res.status(200).json({ message: "Запис додано" });
   } catch (err) {

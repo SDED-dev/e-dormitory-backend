@@ -12,7 +12,6 @@ r.post(
   "/create",
   auth(["admin", "dean"]),
   body("course_id").not().isEmpty().withMessage("Курс не вказано"),
-  body("faculty_id").not().isEmpty().withMessage("Факультет не вказано"),
   body("in_time").not().isEmpty().withMessage("Дату заселення не вказано"),
   body("out_time").not().isEmpty().withMessage("Дату виселення не вказано"),
   require($ + "/controllers/checkTime/create")
@@ -23,7 +22,6 @@ r.patch(
   auth(["admin", "dean"]),
   body("id").not().isEmpty().withMessage("ID не вказано"),
   body("course_id").not().isEmpty().withMessage("Курс не вказано"),
-  body("faculty_id").not().isEmpty().withMessage("Факультет не вказано"),
   body("in_time").not().isEmpty().withMessage("Дату заселення не вказано"),
   body("out_time").not().isEmpty().withMessage("Дату виселення не вказано"),
   require($ + "/controllers/checkTime/edit")
