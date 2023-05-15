@@ -1,12 +1,25 @@
 const db = require($ + "/db.js");
-const jwt = require("jsonwebtoken");
-const filesList = require($ + "/modules/files/list.js");
 
 module.exports = async (req, res) => {
   try {
     var data;
-    var query =
-      "SELECT orders.id, first_name, last_name, sur_name, gender, faculties.name AS faculty, course.name AS course, `group` FROM orders INNER JOIN rooms ON orders.room_id = rooms.id INNER JOIN course ON orders.course_id = course.id INNER JOIN faculties ON orders.faculty_id = faculties.id";
+    var query = `SELECT
+    orders.id,
+    first_name,
+    last_name,
+    sur_name,
+    gender,
+    faculties.name AS faculty,
+    course.name AS course,
+    "group"
+FROM orders
+    INNER JOIN rooms ON orders.room_id = rooms.id
+    INNER JOIN course ON orders.course_id = course.id
+    INNER JOIN faculties ON orders.faculty_id = faculties.id`;
+
+    if (req.user.roles.includes("user")) {
+      data = await db(query + " WHERE user_id = ?", [req.user.id]);
+    }
 
     if (req.user.roles.includes("dean")) {
       const faculties = await db("SELECT id FROM faculties WHERE dean_id = ?", [
@@ -23,12 +36,6 @@ module.exports = async (req, res) => {
       data = await db("SELECT * FROM orders WHERE dormitory_id = ?", [
         dormitory[0].id,
       ]);
-    }
-
-    if (data) {
-      for (let i = 0; i < data.length; i++) {
-        data[i].files = await filesList(data[i].id);
-      }
     }
 
     res.status(200).json(data);
