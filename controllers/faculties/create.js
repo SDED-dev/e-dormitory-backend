@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     const { name } = req.body;
     const dean_id = req.body.dean_id || null;
 
-    await db(`INSERT INTO faculties (name, dean_id) VALUES (?)`, [
+    await db(`INSERT INTO faculties (name, dean_id) VALUES (?, ?)`, [
       name,
       dean_id,
     ]);
