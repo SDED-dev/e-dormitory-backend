@@ -48,7 +48,7 @@ r.patch("/revoke", auth(["user"]), require($ + "/controllers/order/revoke"));
 
 r.patch(
   "/editStatus",
-  auth(["admin", "moderator"]),
+  auth(["admin", "dean", "commandant"]),
   body("order").isInt().withMessage("Заяву не вказано"),
   body("status").isInt().withMessage("Статус не вказано"),
   require($ + "/controllers/order/editStatus")
@@ -66,7 +66,7 @@ r.get(
   require($ + "/controllers/order/canCreate.js")
 );
 
-r.use("/comment", require("./comment.js"));
+//r.use("/comment", require("./comment.js"));
 
 r.get(
   "/:orderId",

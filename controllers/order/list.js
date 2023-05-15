@@ -3,21 +3,8 @@ const db = require($ + "/db.js");
 module.exports = async (req, res) => {
   try {
     var data;
-    var query = `SELECT
-    orders.id,
-    first_name,
-    last_name,
-    sur_name,
-    gender,
-    faculties.name AS faculty,
-    course.name AS course,
-    "group",
-    order_statuses.name AS status
-FROM orders
-    INNER JOIN rooms ON orders.room_id = rooms.id
-    INNER JOIN course ON orders.course_id = course.id
-    INNER JOIN faculties ON orders.faculty_id = faculties.id
-    INNER JOIN order_statuses ON orders.status = order_statuses.id`;
+    var query =
+      "SELECT orders.id, first_name, last_name, sur_name, gender, faculties.name AS faculty, course.name AS course, `group`, order_statuses.name AS status FROM orders INNER JOIN rooms ON orders.room_id = rooms.id INNER JOIN course ON orders.course_id = course.id INNER JOIN faculties ON orders.faculty_id = faculties.id INNER JOIN order_statuses ON orders.status = order_statuses.id";
 
     if (req.user.roles.includes("user")) {
       data = await db(query + " WHERE user_id = ?", [req.user.id]);

@@ -9,22 +9,34 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const token = req.query.token;
+    const { token, order, file } = req.query;
     jwt.verify(token, process.env.JWT_SECRET);
     const { user } = jwt.decode(token, process.env.JWT_SECRET);
-    const { order, file } = req.query;
 
-    if (user.roles.includes("admin") || user.roles.includes("moderator"))
-      return res.sendfile(process.env.STATIC_PATH + `/orders/${order}/${file}`);
+    const local_file = process.env.STATIC_PATH + `/orders/${order}/${file}`;
 
+    if (user.roles.includes("admin")) return res.sendFile(local_file);
+
+    if (user.roles.includes("dean")) {
+      const check = await db(
+        `SELECT dean_id FROM faculties WHERE id = (SELECT faculty_id FROM orders WHERE id = ?)`,
+        [order]
+      );
+      if (check[0].dean_id === user.id) return res.sendFile(local_file);
+    }
+
+    if (user.roles.includes("commandant")) {
+      const check = await db(
+        `SELECT commandant_id FROM dormitories WHERE id = (SELECT dormitory_id FROM orders WHERE id = ?)`,
+        [order]
+      );
+      if (check[0].commandant_id === user.id) return res.sendFile(local_file);
+    }
     if (user.roles.includes("user")) {
       const check = await db(`SELECT user_id FROM orders WHERE id = ?`, [
         order,
       ]);
-      if (check[0].user_id === user.id)
-        return res.sendfile(
-          process.env.STATIC_PATH + `/orders/${order}/${file}`
-        );
+      if (check[0].user_id === user.id) return res.sendFile(local_file);
     }
     res.status(401).json({ errors: [{ msg: "У доступі відмовлено" }] });
   } catch (err) {
