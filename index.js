@@ -39,6 +39,10 @@ app.use(
 
 app.use("/v0", require("./router.js"));
 
+app.use((req, res) => {
+  res.status(444).end();
+});
+
 fs.promises.mkdir(process.env.STATIC_PATH + "/temp/", { recursive: true });
 fs.promises.mkdir(process.env.STATIC_PATH + "/orders/", { recursive: true });
 
