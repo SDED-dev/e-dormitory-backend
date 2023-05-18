@@ -14,9 +14,7 @@ module.exports = async (req, res) => {
       const faculties = await db("SELECT id FROM faculties WHERE dean_id = ?", [
         req.user.id,
       ]);
-      data = await db(query + " WHERE faculty_id = ? AND status = 6", [
-        faculties[0].id,
-      ]);
+      data = await db(query + " WHERE faculty_id = ?", [faculties[0].id]);
     }
 
     if (req.user.roles.includes("commandant")) {
