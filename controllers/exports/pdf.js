@@ -37,7 +37,12 @@ module.exports = async (req, res) => {
 
     html = html.replace("key-table_edit", sn);
 
-    const browser = await puppeteer.launch({});
+    var arg = {};
+
+    if (process.platform == "linux")
+      arg = { executablePath: "/usr/bin/chromium-browser" };
+
+    const browser = await puppeteer.launch(arg);
 
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: "domcontentloaded" });
