@@ -9,5 +9,6 @@ r.use("/benefit", require("./routes/benefit.js"));
 r.use("/static", require("./routes/static.js"));
 r.use("/checkTime", require("./routes/checkTime.js"));
 r.use("/course", require("./routes/course.js"));
+r.use("/export", require("./routes/export.js"));
 
 module.exports = r;
